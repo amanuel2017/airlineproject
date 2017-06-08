@@ -21,7 +21,7 @@ public class Airline {
 	@OneToMany(mappedBy = "airline")
 	@OrderBy("departureDate, departureTime")
 	private List<Flight> flights;
-    /* test for git*/
+    /* test for the git*/
 	/* Constructors */
 	public Airline() {
 	}
