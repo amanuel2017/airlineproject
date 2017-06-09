@@ -1,4 +1,4 @@
-package cs545.airline.model;
+ package cs545.airline.model;
 
 import java.util.Collections;
 import java.util.List;
