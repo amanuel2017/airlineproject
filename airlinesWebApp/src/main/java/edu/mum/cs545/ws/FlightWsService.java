@@ -20,7 +20,7 @@ import cs545.airline.model.Flight;
 import cs545.airline.service.FlightService;
 
 @Path("flight")
-public class HelloFlight {
+public class FlightWsService {
 
 	@Inject
 	private FlightService flightService;
@@ -32,20 +32,7 @@ public class HelloFlight {
 		return "Hello " + name + "!";
 	}
 
-	@POST
-	@Path("create")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public void create(Flight flight) {
-		flightService.create(flight);
-	}
-
-	@DELETE
-	@Path("delete")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public void delete(Flight flight) {
-		flightService.delete(flight);
-	}
-
+	
 	@PUT
 	@Path("update")
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -91,7 +78,7 @@ public class HelloFlight {
 		return flightService.findByAirline(airline);
 	}
 	
-	@GET
+	/*@GET
 	@Path("findbyarrivaldate")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Flight> findByArrival(Date datetime) {
@@ -116,7 +103,7 @@ public class HelloFlight {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Flight> findByDepartureBetween(Date datetimeFrom, Date datetimeTo) {
 		return flightService.findByDepartureBetween(datetimeFrom, datetimeTo);
-	}
+	}*/
 	
 	@GET
 	@Path("findall")

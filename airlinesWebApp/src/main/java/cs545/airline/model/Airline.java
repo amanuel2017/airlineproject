@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 @Entity
@@ -21,7 +22,19 @@ public class Airline {
 	@OneToMany(mappedBy = "airline")
 	@OrderBy("departureDate, departureTime")
 	private List<Flight> flights;
-    /* test for the git*/
+	
+	@Transient
+	private boolean editable;
+	
+    public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
+
+	/* test for the git*/
 	/* Constructors */
 	public Airline() {
 	}

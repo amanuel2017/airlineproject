@@ -3,7 +3,7 @@ package edu.mum.cs545.ws;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.websocket.server.PathParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -13,16 +13,18 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import cs545.airline.model.Airline;
 import cs545.airline.model.Flight;
 import cs545.airline.service.AirlineService;
 @Path("airline")
-public class HelloAirline {
+public class AirlineWsSerive {
 	
 	@Inject
 	private AirlineService airlineService;
-	
+
+
 	@Path("default") 
 	@GET
 	public String helloWorld(@DefaultValue("Amanuelairline") @QueryParam("name") String name) {
@@ -30,25 +32,49 @@ public class HelloAirline {
 		return "Hello " + name + "!";
 	}
 
-	@POST
+	
 	@Path("create")
-	@Produces({MediaType.APPLICATION_JSON})
-	public void create(Airline airport) {
-		System.out.print("creat is successfull");
+	@Consumes({MediaType.APPLICATION_JSON})
+	@POST
+	public String create(Airline airport) {
+		
 		airlineService.create(airport);
+		return airport.getName() + " successful " + airport.getId();
 	}
 	@DELETE
 	@Path("delete")
 	@Produces({MediaType.APPLICATION_JSON})
-	public void delete(Airline airport) {
-		airlineService.delete(airport);
+	public String delete(String name) {
+		
+		try{
+		Airline airline = airlineService.findByName(name);		
+		airlineService.delete(airline);
+		System.out.println("delete is successful");
+	   }
+		catch(Exception e){
+			  System.out.println("delete failed");
+				e.printStackTrace();
+				}
+			return "airline";
 	}
+	
 	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Airline update(Airline airline) {
+		return airlineService.update(airline);
+	}
+	
+	/*
 	@Path("update")
 	@Produces({MediaType.APPLICATION_JSON})
-	public Airline update(Airline airport) {
-		return airlineService.update(airport);
-	}
+	public Response update(Airline airline) {
+		try {
+			airlineService.update(airline);
+			return Response.ok(airline).build();
+		} catch (Exception e) {
+			return Response.serverError().entity("problem with update airline.").build();
+		}
+	}*/
 	@GET
 	@Path("find")
 	@Produces({MediaType.APPLICATION_JSON})
