@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Airline</title>
+</h:head>
+<h:body>
+
+	<h:form>
+		<h:commandLink action="index?faces-redirect=true">
+			<h:outputText value="Back to home page"></h:outputText>
+		</h:commandLink>
+	</h:form>
+	<br />
+	<h:form>
+ 	    Register:
+ 	    <h:inputText id="text_airlinename"
+			value="#{allservice.flightQuery.airlineName}">
+		</h:inputText>
+		<h:commandButton value="Add">
+			<f:ajax listener="#{allservice.create()}" execute="@form"
+				render="table_id" />
+		</h:commandButton>
+	</h:form>
+	<br></br>
+
+	<div style="float: left;">
+		<h:dataTable value="#{airlineService.findAll()}" var="airline"
+			id="table_id" styleClass="order-table"
+			headerClass="order-table-header"
+			rowClasses="order-table-odd-row,order-table-even-row" border = "1">
+				
+			<h:column>
+				<f:facet name="header">	Id</f:facet>#{airline.id}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Name</f:facet>#{airline.name}
+			</h:column>
+			<h:column>
+			
+				<h:form>
+					<h:commandButton action="#{airlineService.delete(airline)}"
+						value="Delete flight"></h:commandButton>
+						<h:commandButton action="airlineservice"
+						value="Edit Flight"></h:commandButton>
+					<!-- <h:commandButton action="#{airlineService.update(airline)}"
+						value="Edit Flight"></h:commandButton> -->
+						
+						
+				</h:form>
+			</h:column>
+
+
+		</h:dataTable>
+	</div>
+</h:body>
+</html>
